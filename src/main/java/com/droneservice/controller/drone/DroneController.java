@@ -4,15 +4,24 @@ import com.droneservice.payload.request.DeliveryStatusRequest;
 import com.droneservice.payload.request.DroneBarLevelRequest;
 import com.droneservice.payload.request.DroneRequest;
 import com.droneservice.payload.request.LoadDroneRequest;
-import com.droneservice.payload.response.*;
+import com.droneservice.payload.response.DeliveryStatusResponse;
+import com.droneservice.payload.response.DroneBarLevelResponse;
+import com.droneservice.payload.response.DroneResponse;
+import com.droneservice.payload.response.IdleDronesResponse;
+import com.droneservice.payload.response.LoadDroneResponse;
+import com.droneservice.payload.response.MedicationDetailsResponse;
 import com.droneservice.service.DroneService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -25,17 +34,18 @@ public class DroneController {
     private final DroneService droneService;
 
     @PostMapping(path = "/register", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
-    public ResponseEntity<String> addDrone(@Valid
-                                               @RequestBody(required = true)
+    public ResponseEntity<DroneResponse> addDrone(@Valid
+                                               @RequestBody()
                                                DroneRequest request)
     {
         droneService.addDrone(request);
-        return new ResponseEntity<>("Drone created successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(new DroneResponse("drone created successfully"),
+                HttpStatus.CREATED);
     }
 
     @GetMapping(path ="/battery", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
     public ResponseEntity<DroneBarLevelResponse> checkDroneBatteryLevel(@Valid
-                                                                       @RequestBody(required = true)
+                                                                       @RequestBody()
                                                                        DroneBarLevelRequest request)
     {
         DroneBarLevelResponse droneBarLevel = droneService.getDroneBarLevel(request);
@@ -51,11 +61,12 @@ public class DroneController {
 
     @PostMapping(path = "/load", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
     public ResponseEntity<LoadDroneResponse> loadDrone(@Valid
-                                                          @RequestBody(required = true)
+                                                          @RequestBody()
                                                           LoadDroneRequest request)
     {
         droneService.loadDrone(request);
-        return new ResponseEntity<>(new LoadDroneResponse("drone loaded successfully"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new LoadDroneResponse("drone loaded successfully"),
+                HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/details/{serialNumber}", produces = "application/json")
@@ -68,7 +79,7 @@ public class DroneController {
 
     @PostMapping(path = "/deliver", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
     public ResponseEntity<DeliveryStatusResponse> DroneDeliveryStatus(@Valid
-                                                               @RequestBody(required = true)
+                                                               @RequestBody()
                                                                DeliveryStatusRequest request)
     {
         DeliveryStatusResponse status = droneService.getDeliveryStatus(request);
