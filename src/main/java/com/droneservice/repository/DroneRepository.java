@@ -8,12 +8,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DroneRepository extends JpaRepository<Drone, String> {
 
     @Query(value = "SELECT e from Drone e where e.serialNumber =:id ")
-    Drone findBySerialNumber (@Param("id") String id);
+    Optional<Drone> findBySerialNumber (@Param("id") String id);
 
     List<Drone> findAllByState (@Param("drone_state") String state);
 
