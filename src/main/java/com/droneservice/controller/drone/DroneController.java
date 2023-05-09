@@ -74,15 +74,15 @@ public class DroneController {
                                                                                    String request)
     {
         MedicationDetailsResponse medicationDetailsResponse = droneService.getLoadedMedDetail(request);
-        return new ResponseEntity<>(medicationDetailsResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(medicationDetailsResponse, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/deliver", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
+    @GetMapping(path = "/deliver", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
     public ResponseEntity<DeliveryStatusResponse> DroneDeliveryStatus(@Valid
                                                                @RequestBody()
                                                                DeliveryStatusRequest request)
     {
         DeliveryStatusResponse status = droneService.getDeliveryStatus(request);
-        return new ResponseEntity<>(status, HttpStatus.CREATED);
+        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 }
