@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface DroneRepository extends JpaRepository<Drone, String> {
 
     @Query(value = "SELECT e from Drone e where e.serialNumber =:id ")
-    Optional<Drone> findBySerialNumber (@Param("id") String id);
+    Optional<Drone> findBySerialNumber (@Param("id") String serialNumber);
 
     List<Drone> findAllByState (@Param("drone_state") String state);
 
