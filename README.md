@@ -48,7 +48,7 @@ git clone https://github.com/michaelik/Drone-Rest-Service.git
 | HTTP METHOD |                 ROUTE                  | STATUS CODE |                  DESCRIPTION                   |
 |:------------|:--------------------------------------:|:------------|:----------------------------------------------:|
 | POST        |          `/api/auth/register`          | 200         |                Create new user                 |
-| POST        |           `/api/auth/login`            | 200         |                Create new user                 |
+| POST        |           `/api/auth/login`            | 200         |                Login new user                 |
 | POST        |        `/api/v1/drone/register`        | 201         |                Create new drone                |
 | POST        |        `/api/v1/drone/battery`         | 200         |            Get drone battery level             |
 | GET         |       `/api/v1/drone/available`        | 200         |            Get all available drones            |
