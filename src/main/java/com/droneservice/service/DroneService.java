@@ -1,12 +1,10 @@
 package com.droneservice.service;
 
+import com.droneservice.payload.request.DeliveryStatusRequest;
 import com.droneservice.payload.request.DroneBarLevelRequest;
 import com.droneservice.payload.request.DroneRequest;
 import com.droneservice.payload.request.LoadDroneRequest;
-import com.droneservice.payload.response.DroneBarLevelResponse;
-import com.droneservice.payload.response.IdleDronesResponse;
-import com.droneservice.payload.response.LoadDroneResponse;
-import com.droneservice.payload.response.MedicationDetailsResponse;
+import com.droneservice.payload.response.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,5 +15,5 @@ public interface DroneService {
     IdleDronesResponse getAvailableDrone();
     void loadDrone(LoadDroneRequest request);
     MedicationDetailsResponse getLoadedMedDetail(String request);
-
+    DeliveryStatusResponse getDeliveryStatus(DeliveryStatusRequest request);
 }

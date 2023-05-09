@@ -7,14 +7,18 @@ import com.droneservice.exception.ResourceNotFoundException;
 import com.droneservice.model.Drone;
 import com.droneservice.model.LoadMedication;
 import com.droneservice.model.Medication;
+import com.droneservice.model.MedicationDelivery;
+import com.droneservice.payload.request.DeliveryStatusRequest;
 import com.droneservice.payload.request.DroneBarLevelRequest;
 import com.droneservice.payload.request.DroneRequest;
 import com.droneservice.payload.request.LoadDroneRequest;
+import com.droneservice.payload.response.DeliveryStatusResponse;
 import com.droneservice.payload.response.DroneBarLevelResponse;
 import com.droneservice.payload.response.IdleDronesResponse;
 import com.droneservice.payload.response.MedicationDetailsResponse;
 import com.droneservice.repository.DroneRepository;
 import com.droneservice.repository.LoadMedicationRepository;
+import com.droneservice.repository.MedicationDeliveryRepository;
 import com.droneservice.repository.MedicationRepository;
 import com.droneservice.service.DroneService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +36,7 @@ public class DroneServiceImpl implements DroneService {
     private final DroneRepository droneRepository;
     private final MedicationRepository medicationRepository;
     private final LoadMedicationRepository loadDroneRepository;
+    private final MedicationDeliveryRepository medicationDeliveryRepository;
 
     @Override
     public void addDrone(DroneRequest request) {
@@ -133,5 +138,28 @@ public class DroneServiceImpl implements DroneService {
                 LocalDateTime.now()
         );
     }
+
+    @Override
+    public DeliveryStatusResponse getDeliveryStatus(DeliveryStatusRequest request) {
+        LoadMedication loadMedication = loadDroneRepository
+                .findByDrone(request.getSerialNumber())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "medication with serial number [%s] not found".formatted(
+                                request
+                        )
+                ));
+        MedicationDelivery medicationDelivery = MedicationDelivery.builder()
+                .loadMedication(loadMedication)
+                .createdAt(LocalDateTime.now())
+                .build();
+        droneRepository.setUpdateState("DELIVERED", loadMedication.getDrone().getSerialNumber());
+        return new DeliveryStatusResponse(
+                loadMedication.getDrone().getState(),
+                medicationDelivery.getCreatedAt()
+        );
+        /*loadMedication.getDrone().setState("DELIVERED");
+        droneRepository.save(loadMedication.);*/
+    }
+
 
 }
