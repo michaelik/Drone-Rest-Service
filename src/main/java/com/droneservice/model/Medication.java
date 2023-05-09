@@ -16,7 +16,6 @@ import javax.persistence.Table;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "medication_tbl")
-//@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class Medication {
 
     @Id
