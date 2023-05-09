@@ -18,7 +18,6 @@ import com.droneservice.payload.response.IdleDronesResponse;
 import com.droneservice.payload.response.MedicationDetailsResponse;
 import com.droneservice.repository.DroneRepository;
 import com.droneservice.repository.LoadMedicationRepository;
-import com.droneservice.repository.MedicationDeliveryRepository;
 import com.droneservice.repository.MedicationRepository;
 import com.droneservice.service.DroneService;
 import lombok.RequiredArgsConstructor;
