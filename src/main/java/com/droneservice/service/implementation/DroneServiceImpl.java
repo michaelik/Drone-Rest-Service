@@ -157,8 +157,6 @@ public class DroneServiceImpl implements DroneService {
                 loadMedication.getDrone().getState(),
                 medicationDelivery.getCreatedAt()
         );
-        /*loadMedication.getDrone().setState("DELIVERED");
-        droneRepository.save(loadMedication.);*/
     }
 
 
