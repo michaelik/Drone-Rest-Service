@@ -224,6 +224,10 @@ The payload will have the following fields
 - `source` is the point of loading
 - `destination` is the end goal of the load
 
+The Medication items `code` to be loaded for testing: 04-5673, 04-6792, 047651, 04-5762, 04-6738
+
+The destination and the source are any places
+
 Request
 
 ```
