@@ -3,6 +3,7 @@ package com.droneservice.controller.drone;
 import com.droneservice.payload.request.DroneBarLevelRequest;
 import com.droneservice.payload.request.DroneRequest;
 import com.droneservice.payload.response.DroneBarLevelResponse;
+import com.droneservice.payload.response.IdleDronesResponse;
 import com.droneservice.service.DroneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -34,10 +35,18 @@ public class DroneController {
     @GetMapping(path ="/battery", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
     public ResponseEntity<DroneBarLevelResponse> checkDroneBattery(@Valid
                                                                        @RequestBody(required = true)
-                                                                       DroneBarLevelRequest requestD)
+                                                                       DroneBarLevelRequest request)
     {
-        DroneBarLevelResponse barLevelResponse = droneService.getDroneBarLevel(requestD);
-        return new ResponseEntity<>(barLevelResponse, HttpStatus.OK);
+        DroneBarLevelResponse droneBarLevel = droneService.getDroneBarLevel(request);
+        return new ResponseEntity<>(droneBarLevel, HttpStatus.OK);
     }
+
+    @GetMapping(path ="/available", produces = "application/json")
+    public ResponseEntity<IdleDronesResponse> checkDroneBattery()
+    {
+        IdleDronesResponse idleDrones = droneService.getAvailableDrone();
+        return new ResponseEntity<>(idleDrones, HttpStatus.OK);
+    }
+
 
 }

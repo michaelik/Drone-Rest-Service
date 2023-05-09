@@ -6,6 +6,7 @@ import com.droneservice.model.Drone;
 import com.droneservice.payload.request.DroneBarLevelRequest;
 import com.droneservice.payload.request.DroneRequest;
 import com.droneservice.payload.response.DroneBarLevelResponse;
+import com.droneservice.payload.response.IdleDronesResponse;
 import com.droneservice.repository.DroneRepository;
 import com.droneservice.service.DroneService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -46,5 +48,14 @@ public class DroneServiceImpl implements DroneService {
         return new DroneBarLevelResponse(droneBattery.getSerialNumber(),
                 droneBattery.getBattery(),
                 LocalDateTime.now());
+    }
+
+    @Override
+    public IdleDronesResponse getAvailableDrone() {
+        String state = "IDLE";
+        List<Drone> drones = droneRepository.findAllByState(state);
+        return new IdleDronesResponse(drones,
+                java.time.LocalDateTime.now()
+                );
     }
 }
