@@ -36,7 +36,6 @@ public class DroneServiceImpl implements DroneService {
     private final DroneRepository droneRepository;
     private final MedicationRepository medicationRepository;
     private final LoadMedicationRepository loadDroneRepository;
-    private final MedicationDeliveryRepository medicationDeliveryRepository;
 
     @Override
     public void addDrone(DroneRequest request) {
@@ -158,6 +157,4 @@ public class DroneServiceImpl implements DroneService {
                 medicationDelivery.getCreatedAt()
         );
     }
-
-
 }
