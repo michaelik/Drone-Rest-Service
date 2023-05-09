@@ -12,6 +12,7 @@ import com.droneservice.payload.request.DroneRequest;
 import com.droneservice.payload.request.LoadDroneRequest;
 import com.droneservice.payload.response.DroneBarLevelResponse;
 import com.droneservice.payload.response.IdleDronesResponse;
+import com.droneservice.payload.response.MedicationDetailsResponse;
 import com.droneservice.repository.DroneRepository;
 import com.droneservice.repository.LoadMedicationRepository;
 import com.droneservice.repository.MedicationRepository;
@@ -94,11 +95,15 @@ public class DroneServiceImpl implements DroneService {
                 )
         );
         if (drone.getWeight() < medication.getWeight()) {
-            throw new InsufficientWeightException("The Drone cannot load more than it weight limit");
+            throw new InsufficientWeightException(
+                    "The Drone cannot load more than it weight limit"
+            );
         }
 
         if( drone.getBattery().compareTo(new BigDecimal("0.25")) < 0){
-            throw new LowBatteryException("The Drone cannot be loaded, battery is below 25%");
+            throw new LowBatteryException(
+                    "The Drone cannot be loaded, battery is below 25%"
+            );
         }
 
         LoadMedication loadMedication = LoadMedication.builder()
@@ -111,6 +116,22 @@ public class DroneServiceImpl implements DroneService {
         loadDroneRepository.save(loadMedication);
         drone.setState("LOADED");
         droneRepository.save(drone);
+    }
+
+    @Override
+    public MedicationDetailsResponse getLoadedMedDetail(String request) {
+        LoadMedication loadMedication = loadDroneRepository
+                .findByDrone(request)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "medication with serial number [%s] not found".formatted(
+                                request
+                        )
+                ));
+        return new MedicationDetailsResponse(
+                loadMedication.getDrone().getSerialNumber(),
+                loadMedication.getMedication(),
+                LocalDateTime.now()
+        );
     }
 
 }

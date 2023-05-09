@@ -15,5 +15,5 @@ public interface LoadMedicationRepository extends JpaRepository<LoadMedication, 
     Optional<LoadMedication> findByCode(@Param("code") String code);
 
     @Query(value = "SELECT * from drone_load_tbl e where e.fk_serial_no =:serial", nativeQuery = true)
-    LoadMedication findByDrone(@Param("serial") String serialNumber);
+    Optional<LoadMedication> findByDrone(@Param("serial") String serialNumber);
 }

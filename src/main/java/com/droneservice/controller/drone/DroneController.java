@@ -6,6 +6,7 @@ import com.droneservice.payload.request.LoadDroneRequest;
 import com.droneservice.payload.response.DroneBarLevelResponse;
 import com.droneservice.payload.response.IdleDronesResponse;
 import com.droneservice.payload.response.LoadDroneResponse;
+import com.droneservice.payload.response.MedicationDetailsResponse;
 import com.droneservice.service.DroneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -59,4 +60,11 @@ public class DroneController {
         return new ResponseEntity<>(new LoadDroneResponse("drone loaded successfully"), HttpStatus.CREATED);
     }
 
+    @GetMapping(path = "/details/{serialNumber}", produces = "application/json")
+    public ResponseEntity<MedicationDetailsResponse> addDrone(@PathVariable("serialNumber")
+                                                          String request)
+    {
+        MedicationDetailsResponse medicationDetailsResponse = droneService.getLoadedMedDetail(request);
+        return new ResponseEntity<>(medicationDetailsResponse, HttpStatus.CREATED);
+    }
 }
