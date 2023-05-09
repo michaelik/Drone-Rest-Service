@@ -18,7 +18,7 @@ public interface DroneRepository extends JpaRepository<Drone, String> {
 
     List<Drone> findAllByState (@Param("drone_state") String state);
 
-    @Modifying
-    @Query(value = "update Drone d set d.state =:state where  d.serialNumber=:serial ")
-    void setUpdateState (@Param("state") String state, @Param("serial") String serial);
+    /*@Modifying
+    @Query(value = "update Drone d set d.state =:state where d.serialNumber=:serial ")
+    void setUpdateState (@Param("state") String state, @Param("serial") String serial);*/
 }

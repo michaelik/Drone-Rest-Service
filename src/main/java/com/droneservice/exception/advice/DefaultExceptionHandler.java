@@ -1,5 +1,7 @@
 package com.droneservice.exception.advice;
 
+import com.droneservice.exception.InsufficientWeightException;
+import com.droneservice.exception.LowBatteryException;
 import com.droneservice.exception.ResourceNotFoundException;
 import com.droneservice.payload.response.ApiErrorResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -74,6 +76,31 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InsufficientWeightException.class)
+    public ResponseEntity<ApiErrorResponse> handleException(InsufficientWeightException e,
+                                                            HttpServletRequest request) {
+        ApiErrorResponse apiError = new ApiErrorResponse(
+                request.getRequestURI(),
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(LowBatteryException.class)
+    public ResponseEntity<ApiErrorResponse> handleException(LowBatteryException e,
+                                                            HttpServletRequest request) {
+        ApiErrorResponse apiError = new ApiErrorResponse(
+                request.getRequestURI(),
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(InsufficientAuthenticationException.class)
     public ResponseEntity<ApiErrorResponse> handleException(InsufficientAuthenticationException e,

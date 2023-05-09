@@ -2,8 +2,10 @@ package com.droneservice.controller.drone;
 
 import com.droneservice.payload.request.DroneBarLevelRequest;
 import com.droneservice.payload.request.DroneRequest;
+import com.droneservice.payload.request.LoadDroneRequest;
 import com.droneservice.payload.response.DroneBarLevelResponse;
 import com.droneservice.payload.response.IdleDronesResponse;
+import com.droneservice.payload.response.LoadDroneResponse;
 import com.droneservice.service.DroneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -48,5 +50,13 @@ public class DroneController {
         return new ResponseEntity<>(idleDrones, HttpStatus.OK);
     }
 
+    @PostMapping(path = "/load", consumes = {MediaType.ALL_VALUE}, produces = "application/json")
+    public ResponseEntity<LoadDroneResponse> addDrone(@Valid
+                                                          @RequestBody(required = true)
+                                                          LoadDroneRequest request)
+    {
+        droneService.loadDrone(request);
+        return new ResponseEntity<>(new LoadDroneResponse("drone loaded successfully"), HttpStatus.CREATED);
+    }
 
 }
