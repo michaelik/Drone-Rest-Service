@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.DecimalFormat;
 import java.util.List;
 
-@RestController
 @RequiredArgsConstructor
-//@SpringBootApplication
-//@EnableScheduling
-//@EnableAsync
+@SpringBootApplication
+@EnableScheduling
+@EnableAsync
 public class LogDroneBattery {
 
     private final DroneRepository droneRepository;
